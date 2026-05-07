@@ -1,0 +1,10 @@
+Name                   Stmts   Miss  Cover   Missing
+----------------------------------------------------
+config.py                 68      4    94%   113-114, 122-123
+data_loader.py            18      1    94%   43
+feature1_analysis.py      32      1    97%   68
+feature2_analysis.py      32      1    97%   63
+feature3_analysis.py      58      1    98%   102
+model.py                  63      2    97%   72-73
+----------------------------------------------------
+TOTAL                    271     10    96%
