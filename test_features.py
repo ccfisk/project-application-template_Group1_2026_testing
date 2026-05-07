@@ -274,6 +274,13 @@ class TestFeature3SeasonalPatterns(unittest.TestCase):
     @patch('feature3_analysis.DataLoader')
     @patch('feature3_analysis.plt')
     def test_run_calls_show(self, mock_plt, mock_loader):
+        import numpy as np
+        from unittest.mock import MagicMock
+        mock_axes = np.empty((3, 2), dtype=object)
+        for i in range(3):
+            for j in range(2):
+                mock_axes[i][j] = MagicMock()
+        mock_plt.subplots.return_value = (MagicMock(), mock_axes)
         mock_loader.return_value.get_issues.return_value = [
             MockIssue(
                 created_date=datetime(2023, 3, 15),
@@ -289,6 +296,13 @@ class TestFeature3SeasonalPatterns(unittest.TestCase):
     @patch('feature3_analysis.DataLoader')
     @patch('feature3_analysis.plt')
     def test_run_handles_empty_issues(self, mock_plt, mock_loader):
+        import numpy as np
+        from unittest.mock import MagicMock
+        mock_axes = np.empty((3, 2), dtype=object)
+        for i in range(3):
+            for j in range(2):
+                mock_axes[i][j] = MagicMock()
+        mock_plt.subplots.return_value = (MagicMock(), mock_axes)
         mock_loader.return_value.get_issues.return_value = []
         try:
             self.analysis.run()
@@ -324,8 +338,10 @@ class TestFeature1WeeklyCommits(unittest.TestCase):
     def test_run_calls_show(self, mock_plt, mock_loader):
         """run() should call plt.show() to display the plot."""
         from feature1_analysis import analysis_time_commit_hist
+        from datetime import timezone
+        recent = datetime.now(tz=timezone.utc) - __import__('datetime').timedelta(weeks=2)
         mock_loader.return_value.get_issues.return_value = [
-            MockIssue(created_date=datetime(2023, 3, 5)),
+            MockIssue(created_date=recent),
         ]
         analysis_time_commit_hist().run()
         mock_plt.show.assert_called_once()
